@@ -1,8 +1,9 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
+import * as Select from '@radix-ui/react-select'
 
-import { Check, GameController } from 'phosphor-react'
+import { ArrowBendRightDown, Check, GameController } from 'phosphor-react'
 import { Input } from './Input'
 import { useEffect, useState } from 'react';
 
@@ -35,21 +36,28 @@ export function CreateAdModal(){
  
                             <form className='mt-8 flex flex-col gap-4'>
                                 <div className='flex flex-col gap-2'>
-                                    <label htmlFor="game" className='font-semibold'
-                                    > Qual o game?
-                                    </label>
-                                   <select
-                                    className='bg-zinc-900 py-3 px-4 rounded text-sm placeholder:text-zinc-500'
-                                    id='game'
-                                    defaultValue=''
-                                    >
-                                        {games.map(game =>{
-                                            return(
-                                                <option key={game.id} value={game.id}>{game.title}</option>
-                                            )
-                                        })}
-                                        <option disabled >Selecione o game que deseja jogar</option>
-                                    </select>
+                                    <label htmlFor="game" className='font-semibold'>Selecione o game</label>
+                                <Select.Root >
+                                    <Select.Trigger id="game" className='bg-zinc-900 rounded text-sm text-zinc-500 w-full flex py-3 px-4 justify-between items-center'>
+                                    <Select.Value placeholder='Selecione o game'/>
+                                    <Select.Icon><ArrowBendRightDown size={15} className='text-white'/></Select.Icon>
+                                    </Select.Trigger>
+                                    <Select.Portal>
+                                        <Select.Content className='bg-white text-center rounded'>
+                                            <Select.Viewport className='text-violet-500 py-2 cursor-pointer'>
+                                                {games.map(game =>{
+                                                    return(
+                                                        <Select.Item key={game.id} value={game.id} className="py-2 px-2 hover:bg-violet-500 hover:text-white rounded-lg flex justify-between items-center">
+                                                            <Select.ItemText className=''>{game.title}</Select.ItemText>
+                                                            <Select.ItemIndicator className=''><Check size={15}/></Select.ItemIndicator>
+                                                        </Select.Item>
+                                                        
+                                                    )
+                                            })}
+                                            </Select.Viewport>
+                                        </Select.Content>
+                                    </Select.Portal>
+                                </Select.Root>
                                 </div>
 
                                 <div className='flex flex-col gap-2'> 
