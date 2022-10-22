@@ -18,10 +18,9 @@ export function CreateAdModal() {
   const [useVoiceChat, setUseVoiceChat] = useState(false);
   const [selectValue, setSelectValue] = useState("");
   useEffect(() => {
-    axios("http://localhost:3000/games")
-      .then((res) => {
-        setGames(res.data);
-      });
+    axios("https://backen-nlw-esports.herokuapp.com/games").then((res) => {
+      setGames(res.data);
+    });
   }, []);
 
   async function handleCreateAd(event: FormEvent) {
@@ -29,25 +28,25 @@ export function CreateAdModal() {
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData);
 
-    if(!data.name){
-      return
+    if (!data.name) {
+      return;
     }
 
-    try{
-      await axios.post(`http://localhost:3000/games/${selectValue}/ads`,{ 
-              name: data.name,
-              yarsPlaying: Number(data.yarsPlaying),
-              discord: data.discord,
-              weekDays: weekDays.map(Number),
-              hourStar: data.hourStar,
-              hourEnd: data.hourEnd,
-              useVoiceChat: useVoiceChat
-            })
-            alert('Ad created')
-    }catch(err){
+    try {
+      await axios.post(`https://backen-nlw-esports.herokuapp.com/games/${selectValue}/ads`, {
+        name: data.name,
+        yarsPlaying: Number(data.yarsPlaying),
+        discord: data.discord,
+        weekDays: weekDays.map(Number),
+        hourStar: data.hourStar,
+        hourEnd: data.hourEnd,
+        useVoiceChat: useVoiceChat,
+      });
+      alert("Ad created");
+    } catch (err) {
       console.log(err);
-      
-      alert('Error created ad')
+
+      alert("Error created ad");
     }
   }
 

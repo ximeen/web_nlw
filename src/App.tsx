@@ -20,7 +20,7 @@ export function App(){
     const [games, setGames] = useState<Game[]>([])
 
     useEffect(()=>{
-        axios('http://localhost:3000/games')
+        axios('https://backen-nlw-esports.herokuapp.com/games')
             .then(res => {
                 setGames(res.data)
             })
